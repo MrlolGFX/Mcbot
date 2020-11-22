@@ -1,6 +1,6 @@
 {
     "name": "mcbot",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "Este es el package oficial del McBot que es el bot oficial del servidor de pol mcfly(invite.gg/polmcfly)",
     "main": "index.js",
     "scripts": {
