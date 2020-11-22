@@ -8,7 +8,7 @@ Este es el package oficial del McBot que es el bot oficial del servidor de pol m
 
 ## Usos:
 
-~~Load:~~
+__Load:__
 
 ```
 const mcbot = require('mcbot')
