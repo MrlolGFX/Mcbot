@@ -5,3 +5,13 @@ Este es el package oficial del McBot que es el bot oficial del servidor de pol m
 ## Instalación
 
 `npm i mcbot`
+
+## Usos:
+
+!Load:
+
+```
+const mcbot = require('mcbot')
+
+mcbot.load()
+```

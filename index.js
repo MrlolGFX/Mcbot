@@ -36,7 +36,11 @@ function guess() {
     console.log("guess")
 }
 
+function load(options) {
+    console.log(colors.bg.White, colors.fg.Black, `${client.username} cargado`, colors.Reset);
+}
 
 
 //exportar
 module.exports.guess = guess;
+module.exports.load = load;

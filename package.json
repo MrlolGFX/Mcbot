@@ -1,33 +1,33 @@
 {
-  "name": "mcbot",
-  "version": "1.0.2",
-  "description": "Este es el package oficial del McBot que es el bot oficial del servidor de pol mcfly(invite.gg/polmcfly)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mrlolpro/Mcbot.git"
-  },
-  "keywords": [
-    "Mcbot",
-    "mcbot",
-    "pol",
-    "mcfly",
-    "pol",
-    "mcfly",
-    "discord",
-    "mrlol",
-    "bot"
-  ],
-  "author": "Mrlol",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Mrlolpro/Mcbot/issues"
-  },
-  "homepage": "https://github.com/Mrlolpro/Mcbot#readme",
-  "dependencies": {
-    "discord.js": "^12.5.0"
-  }
+    "name": "mcbot",
+    "version": "1.0.4",
+    "description": "Este es el package oficial del McBot que es el bot oficial del servidor de pol mcfly(invite.gg/polmcfly)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Mrlolpro/Mcbot.git"
+    },
+    "keywords": [
+        "Mcbot",
+        "mcbot",
+        "pol",
+        "mcfly",
+        "pol",
+        "mcfly",
+        "discord",
+        "mrlol",
+        "bot"
+    ],
+    "author": "Mrlol",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Mrlolpro/Mcbot/issues"
+    },
+    "homepage": "https://github.com/Mrlolpro/Mcbot#readme",
+    "dependencies": {
+        "discord.js": "^12.5.0"
+    }
 }
