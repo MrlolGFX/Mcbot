@@ -32,12 +32,10 @@ const colors = {
 };
 console.log(colors.bg.White, colors.fg.Black, "✅ McBot cargado con exito ", colors.Reset);
 
-function guess() {
-    console.log("guess")
-}
+function guess() {}
 
 function load(options) {
-    console.log(colors.bg.White, colors.fg.Black, `${client.username} cargado`, colors.Reset);
+    console.log(colors.bg.White, colors.fg.Black, "✅ Bot listo", colors.Reset);
 }
 
 
