@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const db = require('quick.db')
 const colors = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",
@@ -35,7 +36,20 @@ console.log(colors.bg.White, colors.fg.Black, "✅ McBot cargado con exito ", co
 function guess() {}
 
 function load(options) {
-    console.log(colors.bg.White, colors.fg.Black, "✅ Bot listo", colors.Reset);
+    let token = db.fetch(`_token_`);
+    let prefix = db.fetch(`_prefix_`);
+    const bot = Discord.Client();
+    if (options.token) {
+        db.set(`_token_`, options.token);
+
+        bot.on("ready", () => {
+            console.log(colors.fg.Green, `✅  ${bot.username} cargado con exito`, colors.Reset);
+        })
+        bot.login(token)
+    }
+
+    //errors
+    if (!options.token || !options.prefix) return console.log(colors.fg.Red, "Debes completar todos los campos\nSi tienes algún problema revisa los docs\n(https://www.npmjs.com/package/mcbot)", colors.Reset);
 }
 
 

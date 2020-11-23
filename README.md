@@ -15,5 +15,8 @@ __Load:__
 ```
 const mcbot = require('mcbot')
 
-mcbot.load()
+mcbot.load({
+    prefix: "!",
+    token: "Tu_Token"
+})
 ```
