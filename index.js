@@ -1,5 +1,9 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
+const fs = require("fs");
+bot.commands = new Discord.Collection();
+const bot = new Discord.Client();
+
 const colors = {
     Reset: "\x1b[0m",
     Bright: "\x1b[1m",
@@ -31,25 +35,63 @@ const colors = {
         Crimson: "\x1b[48m"
     }
 };
-console.log(colors.bg.White, colors.fg.Black, "✅ McBot cargado con exito ", colors.Reset);
+
+console.log(colors.fg.Green, "\n\n✅ McBot cargado con exito\n\n", colors.Reset);
 
 function guess() {}
 
 function load(options) {
+
     let token = db.fetch(`_token_`);
     let prefix = db.fetch(`_prefix_`);
-    const bot = Discord.Client();
     if (options.token) {
         db.set(`_token_`, options.token);
+        if (!options.prefix) { db.set(`_prefix_`, "!") } else db.set(`_prefix_`, options.prefix)
+
+        fs.readdir("./commandos/", (err, files) => {
+
+            if (err) console.log(err);
+
+            let jsfile = files.filter(f => f.split(".").pop() === "js");
+            if (jsfile.length <= 0) {
+                console.log(colors.fg.Red, `No se han encontrado comandos.\nContacte al soporte en invite.gg/polmcfly`, colors.Reset);
+                return;
+            }
+
+            jsfile.forEach((f, i) => {
+                let props = require(`./commandos/${f}`);
+                console.log(colors.fg.Green, `\n✅ ${f} Comando listo\n`, colors.Reset);
+                bot.commands.set(props.help.name, props);
+                bot.commands.set(props.help.alias, props);
+
+            });
+
+        });
+
 
         bot.on("ready", () => {
-            console.log(colors.fg.Green, `✅  ${bot.username} cargado con exito`, colors.Reset);
+            console.log(colors.fg.Green, `\n✅ ${bot.user.tag} cargado con exito\n`, colors.Reset);
+        })
+
+        bot.on("message", async message => {
+            //a little bit of data parsing/general checks
+            if (message.author.bot) return;
+            if (message.channel.type === 'dm') return;
+            let content = message.content.split(" ");
+            let commandp = content[0];
+            let args = content.slice(1);
+
+
+            //checks if message contains a command and runs it
+            let commandfile = bot.commands.get(commandp.slice(prefix.length));
+            if (commandfile) commandfile.run(bot, message, args);
         })
         bot.login(token)
+
     }
 
     //errors
-    if (!options.token || !options.prefix) return console.log(colors.fg.Red, "Debes completar todos los campos\nSi tienes algún problema revisa los docs\n(https://www.npmjs.com/package/mcbot)", colors.Reset);
+    if (!options.token) return console.log(colors.fg.Red, "Debes completar todos los campos\nSi tienes algún problema revisa los docs\n(https://www.npmjs.com/package/mcbot)", colors.Reset);
 }
 
 
