@@ -1,10 +1,12 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
 const fs = require("fs");
+const { join } = require('path');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 const { readdirSync } = require('fs');
+
 
 
 
@@ -51,16 +53,6 @@ function load(options) {
         if (!options.prefix) { db.set(`_prefix_`, "!") } else db.set(`_prefix_`, options.prefix)
 
 
-        const commandFiles = readdirSync(join(__dirname, "commandos")).filter(file => file.endsWith(".js"));
-
-
-
-        for (const file of commandFiles) {
-            const command = require(join(__dirname, "commandos", `${file}`));
-            client.commands.set(command.name, command);
-            client.commands.set(command.aliases, command);
-
-        }
 
         bot.on("ready", () => {
             console.log(colors.fg.Green, `\n✅ ${bot.user.tag} cargado con exito\n`, colors.Reset);
@@ -76,29 +68,15 @@ function load(options) {
 
         bot.on("message", async message => {
             if (message.author.bot) return;
+            const args = message.content.substring(prefix.length).split(" ")
             if (message.channel.type === 'dm') return;
             let user = message.author;
             let user1 = message.mentions.users.first()
-                // if (message.content.startsWith(`${prefix}ping`)) {
-                //   message.channel.send(`🏓Ping: ${msg.createdTimestamp - message.createdTimestamp}ms. API ping discord: ${Math.round(client.ws.ping)}ms`);
-                //}
-
-
-            if (message.content.startsWith(prefix)) {
-
-                const args = message.content.slice(prefix.length).trim().split(/ +/);
-
-                const command = args.shift().toLowerCase();
-                if (!bot.commands.has(command)) return;
-
-
-                try {
-                    bot.commands.get(command).run(bot, message, args);
-
-                } catch (error) {
-                    console.error(error);
-                }
+            if (message.content.startsWith(`${prefix}ping`)) {
+                message.channel.send(`🏓Ping: ${msg.createdTimestamp - message.createdTimestamp}ms. API ping discord: ${Math.round(client.ws.ping)}ms`);
             }
+
+
 
         })
         bot.login(token)
@@ -111,5 +89,4 @@ function load(options) {
 
 
 //exportar
-module.exports.guess = guess;
 module.exports.load = load;
