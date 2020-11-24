@@ -1,8 +1,12 @@
 const Discord = require('discord.js')
 const db = require('quick.db')
 const fs = require("fs");
-bot.commands = new Discord.Collection();
 const bot = new Discord.Client();
+bot.commands = new Discord.Collection();
+bot.aliases = new Discord.Collection();
+const { readdirSync } = require('fs');
+
+
 
 const colors = {
     Reset: "\x1b[0m",
@@ -38,8 +42,6 @@ const colors = {
 
 console.log(colors.fg.Green, "\n\n✅ McBot cargado con exito\n\n", colors.Reset);
 
-function guess() {}
-
 function load(options) {
 
     let token = db.fetch(`_token_`);
@@ -48,43 +50,56 @@ function load(options) {
         db.set(`_token_`, options.token);
         if (!options.prefix) { db.set(`_prefix_`, "!") } else db.set(`_prefix_`, options.prefix)
 
-        fs.readdir("./commandos/", (err, files) => {
 
-            if (err) console.log(err);
+        const commandFiles = readdirSync(join(__dirname, "commandos")).filter(file => file.endsWith(".js"));
 
-            let jsfile = files.filter(f => f.split(".").pop() === "js");
-            if (jsfile.length <= 0) {
-                console.log(colors.fg.Red, `No se han encontrado comandos.\nContacte al soporte en invite.gg/polmcfly`, colors.Reset);
-                return;
-            }
 
-            jsfile.forEach((f, i) => {
-                let props = require(`./commandos/${f}`);
-                console.log(colors.fg.Green, `\n✅ ${f} Comando listo\n`, colors.Reset);
-                bot.commands.set(props.help.name, props);
-                bot.commands.set(props.help.alias, props);
 
-            });
+        for (const file of commandFiles) {
+            const command = require(join(__dirname, "commandos", `${file}`));
+            client.commands.set(command.name, command);
+            client.commands.set(command.aliases, command);
 
-        });
-
+        }
 
         bot.on("ready", () => {
             console.log(colors.fg.Green, `\n✅ ${bot.user.tag} cargado con exito\n`, colors.Reset);
+            bot.user.setPresence({
+                status: "online",
+                activity: {
+                    name: `${prefix}`,
+                    type: "PLAYING"
+                }
+            });
         })
 
+
         bot.on("message", async message => {
-            //a little bit of data parsing/general checks
             if (message.author.bot) return;
             if (message.channel.type === 'dm') return;
-            let content = message.content.split(" ");
-            let commandp = content[0];
-            let args = content.slice(1);
+            let user = message.author;
+            let user1 = message.mentions.users.first()
+                // if (message.content.startsWith(`${prefix}ping`)) {
+                //   message.channel.send(`🏓Ping: ${msg.createdTimestamp - message.createdTimestamp}ms. API ping discord: ${Math.round(client.ws.ping)}ms`);
+                //}
 
 
-            //checks if message contains a command and runs it
-            let commandfile = bot.commands.get(commandp.slice(prefix.length));
-            if (commandfile) commandfile.run(bot, message, args);
+            if (message.content.startsWith(prefix)) {
+
+                const args = message.content.slice(prefix.length).trim().split(/ +/);
+
+                const command = args.shift().toLowerCase();
+                if (!bot.commands.has(command)) return;
+
+
+                try {
+                    bot.commands.get(command).run(bot, message, args);
+
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
         })
         bot.login(token)
 
