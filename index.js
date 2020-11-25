@@ -5,7 +5,6 @@ const { join } = require('path');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
-const { readdirSync } = require('fs');
 
 
 
@@ -46,11 +45,37 @@ console.log(colors.fg.Green, "\n\n✅ McBot cargado con exito\n\n", colors.Reset
 
 function load(options) {
 
+    const commandFiles = readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"));
+
+
+
+    for (const file of commandFiles) {
+        const command = require(join(__dirname, "commands", `${file}`));
+
+        client.commands.set(command.name, command);
+    }
+
+
     let token = db.fetch(`_token_`);
     let prefix = db.fetch(`_prefix_`);
+    //custom
+    let base = db.fetch(`_color_base_`);
+    let success = db.fetch(`_color_success_`);
+    let error = db.fetch(`_color_error_`);
+    let warn = db.fetch(`_color_warn_`);
+
+
     if (options.token) {
         db.set(`_token_`, options.token);
         if (!options.prefix) { db.set(`_prefix_`, "!") } else db.set(`_prefix_`, options.prefix)
+        if (!options.Color_Base) { db.set(`_color_base_`, "#00d6ff") } else db.set(`_color_base_`, options.Color_Base)
+        if (!options.Color_Success) { db.set(`_color_success_`, "#01CF00") } else db.set(`_color_success_`, options.Color_Success)
+        if (!options.Color_Warn) { db.set(`_color_success_`, "#01CF00") } else db.set(`_color_success_`, options.Color_Warn)
+        if (!options.Color_Error) { db.set(`_color_error_`, "#FBDD00") } else db.set(`_color_error_`, options.Color_Error)
+
+
+
+
 
 
 
@@ -59,7 +84,7 @@ function load(options) {
             bot.user.setPresence({
                 status: "online",
                 activity: {
-                    name: `${prefix}`,
+                    name: `${bot.username} | ${prefix}ping`,
                     type: "PLAYING"
                 }
             });
@@ -72,11 +97,22 @@ function load(options) {
             if (message.channel.type === 'dm') return;
             let user = message.author;
             let user1 = message.mentions.users.first()
-            if (message.content.startsWith(`${prefix}ping`)) {
-                message.channel.send(`🏓Ping: ${msg.createdTimestamp - message.createdTimestamp}ms. API ping discord: ${Math.round(client.ws.ping)}ms`);
+
+            if (message.content.startsWith(prefix)) {
+
+                const args = message.content.slice(prefix.length).trim().split(/ +/);
+
+                const command = args.shift().toLowerCase();
+                if (!client.commands.has(command)) return;
+
+
+                try {
+                    client.commands.get(command).run(client, message, args);
+
+                } catch (error) {
+                    console.error(error);
+                }
             }
-
-
 
         })
         bot.login(token)
