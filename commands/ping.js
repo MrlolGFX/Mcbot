@@ -11,7 +11,7 @@ module.exports = {
 
     async run(bot, message, args) {
         const ping = new Discord.MessageEmbed()
-            .setDescription(`🏓\`${Date.now() - message.createdTimestamp}\`ms`)
+            .setDescription(`🏓 **${Date.now() - message.createdTimestamp}**ms`)
             .setColor(base)
 
 

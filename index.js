@@ -45,14 +45,14 @@ console.log(colors.fg.Green, "\n\n✅ McBot cargado con exito\n\n", colors.Reset
 
 function load(options) {
 
-    const commandFiles = readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"));
+    const commandFiles = fs.readdirSync(join(__dirname, "commands")).filter(file => file.endsWith(".js"));
 
 
 
     for (const file of commandFiles) {
         const command = require(join(__dirname, "commands", `${file}`));
 
-        client.commands.set(command.name, command);
+        bot.commands.set(command.name, command);
     }
 
 
@@ -103,11 +103,11 @@ function load(options) {
                 const args = message.content.slice(prefix.length).trim().split(/ +/);
 
                 const command = args.shift().toLowerCase();
-                if (!client.commands.has(command)) return;
+                if (!bot.commands.has(command)) return;
 
 
                 try {
-                    client.commands.get(command).run(client, message, args);
+                    bot.commands.get(command).run(bot, message, args);
 
                 } catch (error) {
                     console.error(error);
