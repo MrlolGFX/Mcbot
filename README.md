@@ -17,7 +17,7 @@ const mcbot = require('mcbot')
 
 mcbot.load({
     prefix: "!",
-    token: "TOKEN", //Consigue tu token (aquí)[https://discord.com/developers/applications]
+    token: "TOKEN", //Consigue tu token aquí: https://discord.com/developers/applications
     Color_Base: "#00d6ff",
     Color_Success: "#01CF00",
     Color_Warn: "#01CF00",

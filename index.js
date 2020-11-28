@@ -87,15 +87,12 @@ function load(options) {
 
 
 
-
-
-
         bot.on("ready", () => {
             console.log(colors.fg.Green, `\n✅ ${bot.user.tag} cargado con exito\n`, colors.Reset);
             bot.user.setPresence({
                 status: "online",
                 activity: {
-                    name: `${bot.username} | ${prefix}ping`,
+                    name: `${bot.user.name} | ${prefix}ping`,
                     type: "PLAYING"
                 }
             });
