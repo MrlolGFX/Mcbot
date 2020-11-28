@@ -22,5 +22,9 @@ mcbot.load({
     Color_Success: "#01CF00",
     Color_Warn: "#01CF00",
     Color_Error: "#FBDD00",
+    Emote_Base: "🛡️",
+    Emote_Success: "✅",
+    Emote_Warn: "⚠️",
+    Emote_Error: "❌",
 })
 ```

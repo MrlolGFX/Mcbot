@@ -59,10 +59,14 @@ function load(options) {
     let token = db.fetch(`_token_`);
     let prefix = db.fetch(`_prefix_`);
     //custom
-    let base = db.fetch(`_color_base_`);
-    let success = db.fetch(`_color_success_`);
-    let error = db.fetch(`_color_error_`);
-    let warn = db.fetch(`_color_warn_`);
+    let cbase = db.fetch(`_color_base_`);
+    let csuccess = db.fetch(`_color_success_`);
+    let cerror = db.fetch(`_color_error_`);
+    let cwarn = db.fetch(`_color_warn_`);
+    let ebase = db.fetch(`_emote_base_`);
+    let esuccess = db.fetch(`_emote_success_`);
+    let eerror = db.fetch(`_emote_error_`);
+    let ewarn = db.fetch(`_emote_warn_`);
 
 
     if (options.token) {
@@ -70,8 +74,15 @@ function load(options) {
         if (!options.prefix) { db.set(`_prefix_`, "!") } else db.set(`_prefix_`, options.prefix)
         if (!options.Color_Base) { db.set(`_color_base_`, "#00d6ff") } else db.set(`_color_base_`, options.Color_Base)
         if (!options.Color_Success) { db.set(`_color_success_`, "#01CF00") } else db.set(`_color_success_`, options.Color_Success)
-        if (!options.Color_Warn) { db.set(`_color_success_`, "#01CF00") } else db.set(`_color_success_`, options.Color_Warn)
+        if (!options.Color_Warn) { db.set(`_color_warn_`, "#01CF00") } else db.set(`_color_warn_`, options.Color_Warn)
         if (!options.Color_Error) { db.set(`_color_error_`, "#FBDD00") } else db.set(`_color_error_`, options.Color_Error)
+        if (!options.Emote_Base) { db.set(`_emote_base_`, "🛡️") } else db.set(`_emote_base_`, options.Emote_Base)
+        if (!options.Emote_Success) { db.set(`_emote_success_`, "✅") } else db.set(`_emote_success_`, options.Emote_Success)
+        if (!options.Emote_Warn) { db.set(`_emote_warn_`, "⚠️") } else db.set(`_emote_warn_`, options.Emote_Warn)
+        if (!options.Emote_Error) { db.set(`_emote_error_`, "❌") } else db.set(`_emote_error_`, options.Emote_Error)
+
+
+
 
 
 

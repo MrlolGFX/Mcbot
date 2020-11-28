@@ -1,10 +1,10 @@
 {
     "name": "mcbot",
-    "version": "1.1.6",
+    "version": "1.2.0",
     "description": "Este es el package oficial del McBot que es el bot oficial del servidor de pol mcfly(invite.gg/polmcfly)",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+
     },
     "repository": {
         "type": "git",
@@ -28,6 +28,7 @@
         "ascii-table": "0.0.9",
         "better-sqlite3": "^7.1.1",
         "bindings": "^1.5.0",
+        "canvacord": "^5.0.8",
         "discord.js": "^12.5.0",
         "path": "^0.12.7",
         "prebuild-install": "^6.0.0",
