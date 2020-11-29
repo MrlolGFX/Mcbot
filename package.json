@@ -1,6 +1,6 @@
 {
     "name": "mcbot",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Este es el package oficial del McBot que es el bot oficial del servidor de pol mcfly(invite.gg/polmcfly)",
     "main": "index.js",
     "scripts": {
@@ -21,9 +21,9 @@
     "author": "Mrlol",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/Mrlolpro/Mcbot/issues"
+        "url": "https://mcbotpackage.glitch.me/bugs"
     },
-    "homepage": "https://github.com/Mrlolpro/Mcbot#readme",
+    "homepage": "https://mcbotpackage.glitch.me",
     "dependencies": {
         "ascii-table": "0.0.9",
         "better-sqlite3": "^7.1.1",
